@@ -8,13 +8,14 @@
 import getpass
 
 class bank_account:
-    def __init__(self,name,address,balance):
+    def __init__(self,name,address,balance,password):
         self.name=name
         self.address=address
         self.balance=balance
+        self.password=password
     
-    def print(self) -> None:
-        print(f'Name:{self.name}  Address:{self.address} Balance:{self.balance}')
+    def printAll(self) -> None:
+        print(f'Name:{self.name} \nAddress:{self.address} \nBalance:{self.balance}')
     
     def withdraw(self,amount) -> None:
         self.balance-=amount
@@ -31,8 +32,25 @@ for i in range(0,n,1):
     address=input('Enter your address: ')
     balance=input('Enter your balance: ')
     password=getpass.getpass('Enter your password: ')
-    accounts.append(bank_account(name,address,balance))
+    accounts.append(bank_account(name,address,balance,password))
 
-print(accounts)
+#Task 2 Authentication
+flag=0
+acc_name=input('Enter the account_name:')
+Password=getpass.getpass('Enter your password: ')
+for individualAcc in accounts:
+    if individualAcc.name==acc_name and individualAcc.password==Password:
+        print('User Found. \nPassword Matched ...')
+        flag=1
+    elif individualAcc.name==acc_name and individualAcc.password!=Password:
+        # print('Incorrect Password')
+        flag=2
+if flag==1:
+    print(f"The user info is given below:")
+    individualAcc.printAll()
+elif flag==2:
+    print('Password not matched !!!')
+elif flag ==0:
+    print('Username not found')
 
 
