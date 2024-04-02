@@ -30,27 +30,55 @@ n=int(input('Enter the no of user to create account: '))
 for i in range(0,n,1):
     name=input('Enter your name: ')
     address=input('Enter your address: ')
-    balance=input('Enter your balance: ')
+    balance=int(input('Enter your balance: '))
     password=getpass.getpass('Enter your password: ')
     accounts.append(bank_account(name,address,balance,password))
 
 #Task 2 Authentication
 flag=0
-acc_name=input('Enter the account_name:')
-Password=getpass.getpass('Enter your password: ')
-for individualAcc in accounts:
-    if individualAcc.name==acc_name and individualAcc.password==Password:
-        print('User Found. \nPassword Matched ...')
-        flag=1
-    elif individualAcc.name==acc_name and individualAcc.password!=Password:
-        # print('Incorrect Password')
-        flag=2
-if flag==1:
-    print(f"The user info is given below:")
-    individualAcc.printAll()
-elif flag==2:
-    print('Password not matched !!!')
-elif flag ==0:
-    print('Username not found')
+while flag !=1:
+    sender_name=input('Enter the account_name:')
+    Password=getpass.getpass('Enter your password: ')
+    for individualAcc in accounts:
+        if individualAcc.name==sender_name and individualAcc.password==Password:
+            print('User Found... \nPassword Matched... ')
+            flag=1
+            break
+        elif individualAcc.name==sender_name and individualAcc.password!=Password:
+            # print('Incorrect Password')
+            flag=2
+            break
+    if flag==1:
+        senderobj=individualAcc
+        print(f"The user info is given below:")
+        individualAcc.printAll()
+    elif flag==2:
+        print('Password not matched !!!')
+    elif flag ==0:
+        print('Username not found')
+
+try:
+    receiver_name=input('Enter the receiver name: ')
+    deposit_amount=int(input('Enter the deposit amount: '))
+    for individualAcc in accounts:
+        # print(individualAcc.name)
+        if individualAcc.name == receiver_name:
+            individualAcc.deposit(deposit_amount)
+            senderobj.withdraw(deposit_amount)
+            print('Receiver final info:')
+            individualAcc.printAll()
+            print('Sender final info:')
+            senderobj.printAll()
+            break
+        else:
+            flag=2
+
+    if flag == 3:
+        print('Username not found')
+except:
+    print('Somme error occurred  ')
+
+
+
 
 
